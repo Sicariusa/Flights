@@ -31,10 +31,10 @@ export const getStateVectors = async (mapGeoBounds: IMapGeoBounds)=>{
 }
 
 export const mapRawData = (rawData: IStateVectorRawData) =>{
-    const stateVectors: IStateVectorData = {
+    const stateVectorData: IStateVectorData = {
         time: rawData.time,
         states: []
-    };
+    }
     if(!rawData.states){
        throw new Error('No states found');
     }
@@ -59,6 +59,7 @@ export const mapRawData = (rawData: IStateVectorRawData) =>{
             spi: rawStateVector[15],
             position_source: rawStateVector[16]
         };
-        return stateVectors;
+        stateVectorData.states.push(stateVector);
+        return stateVectorData;
     }
 }
