@@ -1,6 +1,7 @@
-import mapboxgl from "mapbox-gl";
+import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
+
 interface IMapViewProps {
     center: mapboxgl.LngLat;
     zoom: number;
@@ -16,15 +17,40 @@ export const MapView = (props: MView)=>{
     useEffect(()=>{
         if(!mapInstance){
             if(!mapContainer.current) return;
-        }
+        
         const map = new mapboxgl.Map({
             container: mapContainer.current || '',
             style: 'mapbox://styles/mapbox/dark-v10',
             center: props.center,
             zoom: props.zoom,
         });
-    }); // useEffect hook to run side effects in the component
+        map.on('load', () =>{
+            map.addControl(
+                new NavigationControl({
+                    showCompass: true,
+                    showZoom: true
+                }),
+                'bottom-right'
+            )
+            map.addControl(
+                new FullscreenControl(),
+                'top-right'
+            )
+            map.addControl(
+                new GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }),
+            'bottom-right'
+            )
+        });
+         setMapInstance(map);
 
+     }
+    }); // useEffect hook to run side effects in the component
+    
     return (
         <div className="root">
             <div className="map-root" ref={mapContainer}></div>
