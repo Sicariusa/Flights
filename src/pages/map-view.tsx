@@ -1,7 +1,10 @@
 import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
-
+import flightLand from './../resources/flight-land.svg'
+import flightIcon from './../resources/flight.svg'
+import flightTakeOff from './../resources/flight-takeoff.svg'
+import { svgToImage } from "../helper/helper";
 interface IMapViewProps {
     center: mapboxgl.LngLat;
     zoom: number;
@@ -14,6 +17,15 @@ export const MapView = (props: MView)=>{
     const [mapInstance , setMapInstance] = useState<mapboxgl.Map>(); // useState hook to store the map instance
     
     const mapContainer = useRef<HTMLDivElement | null>(null); // useRef hook to store the map container reference
+    
+    
+    const svgImages = [flightIcon, flightLand, flightTakeOff];
+    const iconName = [
+        'flight-icon',
+        'flight-land',
+        'flight-takeoff',
+    ]
+    
     useEffect(()=>{
         if(!mapInstance){
             if(!mapContainer.current) return;
@@ -25,6 +37,11 @@ export const MapView = (props: MView)=>{
             zoom: props.zoom,
         });
         map.on('load', () =>{
+        svgImages.map((image, index) => {
+            return svgToImage(image, 18, 18).then((img:any) => {
+                map.addImage(iconName[index], img, {sdf: true});
+            })
+        })
             map.addControl(
                 new NavigationControl({
                     showCompass: true,
