@@ -1,4 +1,5 @@
-import { IMapGeoBounds } from "../model/opensky-model";
+import { FeatureCollection } from "geojson";
+import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
 
 export const svgToImage = (path: string, width: number, height: number) => {
     return new Promise(resolve => {
@@ -31,4 +32,18 @@ export const getMapGeoBounds = (bounds: mapboxgl.LngLatBounds) => {
 
     // Return the mapped geographic bounds
     return mapGeoBounds;
+}
+
+export const createFeatures = (stateVectors: IStateVectorData | undefined)=>{
+    if(!stateVectors){
+        throw new Error('No state vectors found fe create Features');
+    }
+    if(!stateVectors.states){
+        throw new Error('No states found fe create Features');
+    }
+    let featureCollection: FeatureCollection = {
+        type : 'FeatureCollection',
+        features: []
+    }
+    return featureCollection;
 }

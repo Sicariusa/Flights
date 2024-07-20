@@ -4,7 +4,7 @@ import './../map.css'
 import flightLand from './../resources/flight-land.svg'
 import flightIcon from './../resources/flight.svg'
 import flightTakeOff from './../resources/flight-takeoff.svg'
-import { getMapGeoBounds, svgToImage } from "../helper/helper";
+import { createFeatures, getMapGeoBounds, svgToImage } from "../helper/helper";
 import { getStateVectors } from "../service/opensky-service";
 interface IMapViewProps {
     center: mapboxgl.LngLat;
@@ -48,8 +48,15 @@ export const MapView = (props: MView)=>{
         //edited
         const bounds = getMapGeoBounds(map.getBounds() || new mapboxgl.LngLatBounds());
         const stateVectors = await getStateVectors(bounds);
-        if(!stateVectors) return;
+        if(stateVectors === null || stateVectors === undefined || !stateVectors) {
+            throw new Error ('Failed to fetch state vectors fe load asln ');
+        }
         const features = createFeatures(stateVectors);
+        map.addSource('flight-source', {
+            type: 'geojson',
+            data: features
+        });
+        
 
             map.addControl(
                 new NavigationControl({
