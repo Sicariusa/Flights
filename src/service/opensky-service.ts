@@ -1,6 +1,6 @@
 
 import {IMapGeoBounds, IStateVectorRawData, IStateVector, IStateVectorData} from './../model/opensky-model';
-
+//https://www.flightaware.com/commercial/aeroapi/
 const baseUrl = 'https://opensky-network.org/api';
 const username = '';
 const password = '';
