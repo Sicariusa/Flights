@@ -57,6 +57,14 @@ export const MapView = (props: MView)=>{
             data: features
         });
         
+       map.addLayer({
+        id:'flight-layer',
+        type:'symbol',
+        source:'flight-source',//taken from addSource method from features
+        layout: getSymbolLayout(map.getZoom()),
+        paint: getSymbolPaint()
+    })
+        
 
             map.addControl(
                 new NavigationControl({

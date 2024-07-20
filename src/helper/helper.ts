@@ -1,5 +1,7 @@
 import { FeatureCollection } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
+import { Expression, StyleSpecification, SymbolLayout } from "mapbox-gl";
+type StyleFunction = Expression; // Assuming Expression fits your needs
 
 export const svgToImage = (path: string, width: number, height: number) => {
     return new Promise(resolve => {
@@ -46,4 +48,45 @@ export const createFeatures = (stateVectors: IStateVectorData | undefined)=>{
         features: []
     }
     return featureCollection;
+}
+
+export const getSymbolLayout = (zoom: number)=>{
+    let showText = false;
+    if( zoom > 7){
+        showText = true;
+    }
+    let iconSize = 1.0;
+    if(zoom > 6 )
+    {
+        iconSize = 1.2;
+    } else if (zoom > 8){
+        iconSize = 1.5;
+    }
+    //Deprecation usually means there's a newer, preferred way of doing things, 
+    //or the functionality has been integrated into a different part of the API.
+    const symbolLayout : SymbolLayout ={
+        'icon-image': 'flight-icon',
+        'icon-allow-overlap': true,
+        'icon-rotate': ['get', 'rotation'],
+        'icon-size': iconSize,
+        'text-field': showText ? getText() : '',
+        'text-optional': true,
+        'text-allow-overlap': true,
+        'text-anchor': showText ? 'top': 'center',
+        'text-offset': showText ? [0,1] : [0, 0],      
+    }
+    return symbolLayout;
+}
+
+export const getText = () => {
+    let text : string | Expression | StyleFunction = [
+        'format',
+        ['get', 'callsign'],{'font-scale': 1.0},
+        '\n',{},
+        ['get', 'altitude'],{'font-scale': 0.75, 'text-color': '#fff'},
+        '\n',{},
+        ['get', 'velocity'],{'font-scale': 0.75, 'text-color': '#fff'}
+    ] as StyleFunction
+    return text 
+
 }
