@@ -47,10 +47,10 @@ export const MapView = (props: MView)=>{
 
         //load state vectors
         //edited
-        const bounds = getMapGeoBounds(map.getBounds() || new mapboxgl.LngLatBounds());
+        const bounds = getMapGeoBounds(map.getBounds() as mapboxgl.LngLatBounds);
         const stateVectors = await getStateVectors(bounds);
-        if(stateVectors === null || stateVectors === undefined || !stateVectors) {
-            throw new Error ('Failed to fetch state vectors fe load asln ');
+        if(stateVectors ===null || stateVectors === undefined){
+           return;
         }
         const features = createFeatures(stateVectors);
         map.addSource('flight-source', {
