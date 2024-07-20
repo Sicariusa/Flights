@@ -49,7 +49,7 @@ export const MapView = (props: MView)=>{
         //edited
         const bounds = getMapGeoBounds(map.getBounds() as mapboxgl.LngLatBounds);
         const stateVectors: any = await getStateVectors(bounds);
-        console.log(stateVectors?.states?.length);
+        console.log(stateVectors?.states.length);
         if(!stateVectors){
            return;
         }

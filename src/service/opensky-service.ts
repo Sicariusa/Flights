@@ -1,14 +1,14 @@
 
 import {IMapGeoBounds, IStateVectorRawData, IStateVector, IStateVectorData} from './../model/opensky-model';
 
-const baseUrl = 'https://opensky-network.org/api/states/all';
+const baseUrl = 'https://opensky-network.org/api';
 const username = '';
 const password = '';
 
 export const getStateVectors = async (mapGeoBounds: IMapGeoBounds)=>{
     const stateBounds =`?lamin =${mapGeoBounds.southernLatitude}&lomin=${mapGeoBounds.westernLongitude}&lamax=${mapGeoBounds.northernLatitude}&lomax=${mapGeoBounds.easternLongitude}`;
-    const targetUrl = baseUrl + stateBounds;
-    //lw fe 7aga bayza fa bsbb el url
+    const targetUrl = `${baseUrl}/states/all${stateBounds}`;
+    
     const response = await fetch(targetUrl, {
         headers:{
             Authorization: 'Basic' + btoa(`${username} :  ${password}`)
