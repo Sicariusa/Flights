@@ -48,8 +48,9 @@ export const MapView = (props: MView)=>{
         //load state vectors
         //edited
         const bounds = getMapGeoBounds(map.getBounds() as mapboxgl.LngLatBounds);
-        const stateVectors = await getStateVectors(bounds);
-        if(stateVectors ===null || stateVectors === undefined){
+        const stateVectors: any = await getStateVectors(bounds);
+        console.log(stateVectors?.states?.length);
+        if(!stateVectors){
            return;
         }
         const features = createFeatures(stateVectors);
