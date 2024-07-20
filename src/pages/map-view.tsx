@@ -4,8 +4,9 @@ import './../map.css'
 import flightLand from './../resources/flight-land.svg'
 import flightIcon from './../resources/flight.svg'
 import flightTakeOff from './../resources/flight-takeoff.svg'
-import { createFeatures, getMapGeoBounds, svgToImage } from "../helper/helper";
+import { createFeatures, getMapGeoBounds, svgToImage, getSymbolLayout, getSymbolPaint } from "../helper/helper";
 import { getStateVectors } from "../service/opensky-service";
+
 interface IMapViewProps {
     center: mapboxgl.LngLat;
     zoom: number;

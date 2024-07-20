@@ -1,6 +1,6 @@
 import { FeatureCollection } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
-import { Expression, StyleSpecification, SymbolLayout } from "mapbox-gl";
+import { Expression, StyleSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
 type StyleFunction = Expression; // Assuming Expression fits your needs
 
 export const svgToImage = (path: string, width: number, height: number) => {
@@ -89,4 +89,15 @@ export const getText = () => {
     ] as StyleFunction
     return text 
 
+}
+
+export const getSymbolPaint = () =>{
+   let symbolpaint : SymbolPaint = {
+        'icon-color': ['get', 'color'], //color is a property in the state vector
+        'text-color': ['get', 'color'],
+        'text-halo-width': 2,
+        'text-halo-color': '#000',
+        'text-halo-blur': 2,
+   }
+    return symbolpaint;
 }
