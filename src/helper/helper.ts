@@ -1,4 +1,4 @@
-import { FeatureCollection } from "geojson";
+import { Feature, FeatureCollection, GeoJsonProperties, Point, Position } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
 import { Expression, StyleSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
 type StyleFunction = Expression; // Assuming Expression fits your needs
@@ -47,6 +47,52 @@ export const createFeatures = (stateVectors: IStateVectorData | undefined)=>{
         type : 'FeatureCollection',
         features: []
     }
+    for (let stateVector of stateVectors.states){
+        if(!stateVector.latitude || !stateVector.longitude){
+           continue;
+    }
+    const index = stateVectors.states.indexOf(stateVector);
+    const callsign = stateVector.callsign ? stateVector.callsign : stateVector.icao24;
+    let altitude = stateVector.geo_altitude;
+    if((altitude === null) || (altitude < 0)){
+        altitude = stateVector.baro_Altitude;
+    }
+    if((altitude === null) || (altitude < 0)){
+        altitude = 0;
+    }
+    const velocity = stateVector.velocity ? (stateVector.velocity * 3.6) : -1;
+    const trueTrack = stateVector.true_track ? stateVector.true_track : 0.0;
+    const vertical_rate = stateVector.vertical_rate ? stateVector.vertical_rate : 0.0;
+    const isGrounded = stateVector.on_ground ;
+    const originCountry = stateVector.originCountry;
+    let color = getColor(altitude);
+    if(isGrounded){
+        color = '#e3f2fd';
+    }
+    let properties: GeoJsonProperties = {
+        'iconName': getIconName(vertical_rate, altitude, trueTrack),
+        'rotation': getRotation(vertical_rate, altitude, trueTrack),
+        'color':color, // the color we declared in line 68
+        'icao24': stateVector.icao24,
+        'callsign': callsign,
+        'originCountry': originCountry,
+        'altitude': altitude,
+        'velocity': velocity,
+
+    }
+    let position: Position = [stateVector.longitude, stateVector.latitude];
+    let point: Point = {
+        type: 'Point',
+        coordinates: position
+    }
+    let feature : Feature<Point, GeoJsonProperties> = {
+        type: 'Feature',
+        id: `${index}.${stateVector.icao24}`,
+        geometry: point,
+        properties: properties
+    }
+    featureCollection.features.push(feature);
+}
     return featureCollection;
 }
 

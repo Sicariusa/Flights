@@ -4,7 +4,7 @@ export interface IMapGeoBounds {
     easternLongitude: number;
     westernLongitude: number;
 }
-
+// Define the IStateVector interface for creating state vectors
 export interface IStateVector {
     icao24: string;
     callsign: string | null;
