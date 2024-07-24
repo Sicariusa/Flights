@@ -42,6 +42,7 @@ export const MapView = (props: MView)=>{
         svgImages.map((image, index) => {
             return svgToImage(image, 18, 18).then((img:any) => {
                 map.addImage(iconName[index], img, {sdf: true});
+                console.log('Image added to map')
             })
         })
 
