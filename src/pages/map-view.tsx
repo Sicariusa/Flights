@@ -1,4 +1,4 @@
-import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
+import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl, SymbolLayerSpecification } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
 import flightLand from './../resources/flight-land.svg'
@@ -27,6 +27,7 @@ export const MapView = (props: MView)=>{
         'flight-land',
         'flight-takeoff',
     ]
+    
     
     useEffect(()=>{
         if(!mapInstance){
@@ -63,8 +64,28 @@ export const MapView = (props: MView)=>{
         id:'flight-layer',
         type:'symbol',
         source:'flight-source',//taken from addSource method from features
-        layout: getSymbolLayout(map.getZoom()),
-        paint: getSymbolPaint()
+        layout: getSymbolLayout(map.getZoom()) as {
+            'icon-image'?: string;
+            'text-field'?: string
+            'text-size'?: number;
+            'icon-allow-overlap'?: boolean;
+            'icon-rotate'?: number;
+            'text-optional'?: boolean;
+            'text-anchor'?: 'center' | 'left' | 'right' | 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+            //'text-offset'?: number[];
+            'text-offset'?: [number, number];
+            // Add other properties as needed
+        },
+        paint: getSymbolPaint() as {
+            'icon-color'?: string;
+            'text-color'?: string;
+            'text-halo-width'?: number;
+            'text-halo-color'?: string;
+            'text-halo-blur'?: number;
+            //'icon-translate'?: number[];
+            //'icon-translate-anchor'?: 'map' | 'viewport';
+            // Add other properties as needed
+        }
     })
         
 
