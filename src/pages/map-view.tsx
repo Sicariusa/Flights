@@ -1,5 +1,4 @@
-import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl, SymbolLayerSpecification } from "mapbox-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
 import flightLand from './../resources/flight-land.svg'
@@ -29,7 +28,6 @@ export const MapView = (props: MView)=>{
         'flight-takeoff',
     ]
     
-    
     useEffect(()=>{
         if(!mapInstance){
             if(!mapContainer.current) return;
@@ -41,21 +39,18 @@ export const MapView = (props: MView)=>{
             zoom: props.zoom,
         });
         map.on('load', async () =>{
-        // svgImages.map((image, index) => {
-        //     return svgToImage(image, 18, 18).then((img:any) => {
-        //         map.addImage(iconName[index], img, {sdf: true});
-        //         console.log('Image added to map');
-        //     })
-        // })
-
-            
+        svgImages.map((image, index) => {
+            return svgToImage(image, 18, 18).then((img:any) => {
+                map.addImage(iconName[index], img, {sdf: true});
+                console.log('Image added to map')
+            })
+        })
 
         //load state vectors
         //edited
         const bounds = getMapGeoBounds(map.getBounds() as mapboxgl.LngLatBounds);
         const stateVectors: any = await getStateVectors(bounds);
         console.log(stateVectors?.states.length);
-        
         if(!stateVectors){
            return;
         }
@@ -69,28 +64,8 @@ export const MapView = (props: MView)=>{
         id:'flight-layer',
         type:'symbol',
         source:'flight-source',//taken from addSource method from features
-        layout: getSymbolLayout(map.getZoom()) as {
-            'icon-image'?: string;
-            'text-field'?: string
-            'text-size'?: number;
-            'icon-allow-overlap'?: boolean;
-            'icon-rotate'?: number;
-            'text-optional'?: boolean;
-            'text-anchor'?: 'center' | 'left' | 'right' | 'top' | 'bottom' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-            //'text-offset'?: number[];
-            'text-offset'?: [number, number];
-            // Add other properties as needed
-        },
-        paint: getSymbolPaint() as {
-            'icon-color'?: string;
-            'text-color'?: string;
-            'text-halo-width'?: number;
-            'text-halo-color'?: string;
-            'text-halo-blur'?: number;
-            //'icon-translate'?: number[];
-            //'icon-translate-anchor'?: 'map' | 'viewport';
-            // Add other properties as needed
-        }
+        layout: getSymbolLayout(map.getZoom()),
+        paint: getSymbolPaint()
     })
         
 

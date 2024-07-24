@@ -1,6 +1,6 @@
 import { Feature, FeatureCollection, GeoJsonProperties, Point, Position } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
-import { Expression, StyleSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
+import { Expression, SymbolLayerSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
 import { get } from "http";
 type StyleFunction = Expression; // Assuming Expression fits your needs
 
@@ -9,6 +9,7 @@ export const svgToImage = (path: string, width: number, height: number) => {
         const img = new Image(width, height);
         img.src = path;
        img.addEventListener('load', () => resolve(img));
+       console.log('Image loaded');
     });
 }
 // Function to get geographic bounds from a Mapbox map and map it to our model (interface)
@@ -111,16 +112,22 @@ export const getSymbolLayout = (zoom: number)=>{
     }
     //Deprecation usually means there's a newer, preferred way of doing things, 
     //or the functionality has been integrated into a different part of the API.
-    const symbolLayout : SymbolLayout ={
-        'icon-image': 'flight-icon',
-        'icon-allow-overlap': true,
-        'icon-rotate': ['get', 'rotation'],
-        'icon-size': iconSize,
-        'text-field': showText ? getText() : '',
-        'text-optional': true,
-        'text-allow-overlap': true,
-        'text-anchor': showText ? 'top': 'center',
-        'text-offset': showText ? [0,1] : [0, 0],      
+    const symbolLayout : SymbolLayerSpecification = {
+        id: "flight-layer",
+        type: "symbol",
+        source: "flight-source",
+        layout: {
+            'icon-image': 'flight-icon',
+            'icon-allow-overlap': true,
+            'icon-rotate': ['get', 'rotation'],
+            'icon-size': iconSize,
+            'text-field': showText ? getText() : '',
+            'text-optional': true,
+            'text-allow-overlap': true,
+            'text-anchor': showText ? 'top': 'center',
+            'text-offset': showText ? [0,1] : [0, 0], 
+        }     
+        
     }
     return symbolLayout;
 }
@@ -139,12 +146,17 @@ export const getText = () => {
 }
 
 export const getSymbolPaint = () =>{
-   let symbolpaint : SymbolPaint = {
-        'icon-color': ['get', 'color'], //color is a property in the state vector
-        'text-color': ['get', 'color'],
-        'text-halo-width': 2,
-        'text-halo-color': '#000',
-        'text-halo-blur': 2,
+   let symbolpaint : SymbolLayerSpecification = {
+       paint: {
+           'icon-color': ['get', 'color'], //color is a property in the state vector
+           'text-color': ['get', 'color'],
+           'text-halo-width': 2,
+           'text-halo-color': '#000',
+           'text-halo-blur': 2,
+       },
+       id: "flight-layer",
+       type: "symbol",
+       source: "flight-source",
    }
     return symbolpaint;
 }
