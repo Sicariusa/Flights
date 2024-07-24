@@ -1,6 +1,7 @@
 import { Feature, FeatureCollection, GeoJsonProperties, Point, Position } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
 import { Expression, StyleSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
+import { get } from "http";
 type StyleFunction = Expression; // Assuming Expression fits your needs
 
 export const svgToImage = (path: string, width: number, height: number) => {
@@ -76,8 +77,8 @@ export const createFeatures = (stateVectors: IStateVectorData | undefined)=>{
         'icao24': stateVector.icao24,
         'callsign': callsign,
         'originCountry': originCountry,
-        'altitude': altitude,
-        'velocity': velocity,
+        'altitude': altitude + 'm',
+        'velocity': velocity + 'km/h',
 
     }
     let position: Position = [stateVector.longitude, stateVector.latitude];
@@ -146,4 +147,36 @@ export const getSymbolPaint = () =>{
         'text-halo-blur': 2,
    }
     return symbolpaint;
+}
+
+export const getColor = (altitude: number)=>{
+    let percent = altitude / 13000*100;
+    percent = (percent > 100) ? 100 : percent;
+    percent = (percent < 0) ? 0 : percent;
+
+    let r, g, b = 0;
+    if(percent < 50){
+        r = 255;
+        g = Math.round(5.1 * percent);
+    } else {
+        g = 255;
+        r = Math.round(510 - 5.10 * percent);
+    }
+    let h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + h.toString(16)).slice(-6);
+}
+
+export const getIconName = (vertical_rate: number, altitude: number, trueTrack: number)=>{  
+    let iconName = 'flight-icon';
+    return iconName;
+}
+export const getRotation = (vertical_rate: number, altitude: number, trueTrack: number)=>{
+    let rotation: number = 0;
+    if(vertical_rate>0 && altitude < 1000){
+        return rotation;
+    } else if(vertical_rate < 0 && altitude < 1000){
+        return rotation;
+    } else {
+       return trueTrack;
+    }
 }
