@@ -1,5 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import { MapView } from './map-view';
+//import MapView from './map-view'; // Default import
+
 import './../map.css'
 export const MapboxHome = () => {
     return (

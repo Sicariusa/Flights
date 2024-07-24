@@ -2,35 +2,40 @@
 import {IMapGeoBounds, IStateVectorRawData, IStateVector, IStateVectorData} from './../model/opensky-model';
 //https://www.flightaware.com/commercial/aeroapi/
 const baseUrl = 'https://opensky-network.org/api';
-const username = '';
-const password = '';
+const username = 'abdo2024';
+const password = '12312300';
 
-export const getStateVectors = async (mapGeoBounds: IMapGeoBounds)=>{
-    const stateBounds =`?lamin =${mapGeoBounds.southernLatitude}&lomin=${mapGeoBounds.westernLongitude}&lamax=${mapGeoBounds.northernLatitude}&lomax=${mapGeoBounds.easternLongitude}`;
+export const getStateVectors = async (mapGeoBounds: IMapGeoBounds) => {
+    const stateBounds = `?lamin=${mapGeoBounds.southernLatitude}&lomin=${mapGeoBounds.westernLongitude}&lamax=${mapGeoBounds.northernLatitude}&lomax=${mapGeoBounds.easternLongitude}`;
     const targetUrl = `${baseUrl}/states/all${stateBounds}`;
-    
-    const response = await fetch(targetUrl, {
-        headers:{
-            Authorization: 'Basic' + btoa(`${username} :  ${password}`)
-        }
-    });
-    if(response.ok){
-        const data = await response.json();
-        const rawData : IStateVectorRawData = data;
-        const getStateVectors = mapRawData(rawData);
-        console.log(getStateVectors?.states.length);
-        if(!getStateVectors){
-            throw new Error('Failed to fetch data');
-        }
-        if(!getStateVectors.states){
-            throw new Error('Failed due to state');
-        }
-    }
-    else{
-        throw new Error('Failed abl fetch asln');
-    }
-}
 
+    try {
+        const response = await fetch(targetUrl, {
+            headers: {
+                'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const rawData: IStateVectorRawData = data;
+        const stateVectors = mapRawData(rawData);
+
+        if (!stateVectors || !stateVectors.states) {
+            throw new Error('No state vectors found');
+        }
+
+        console.log('Number of states:', stateVectors.states.length);
+        return stateVectors;
+
+    } catch (error) {
+        console.error('Error fetching state vectors:', error);
+        throw error; // Rethrow the error to be handled by the calling code
+    }
+};
 export const mapRawData = (rawData: IStateVectorRawData) =>{
     const stateVectorData: IStateVectorData = {
         time: rawData.time,
@@ -64,4 +69,5 @@ export const mapRawData = (rawData: IStateVectorRawData) =>{
        
     }
     return stateVectorData;
+   
 }
