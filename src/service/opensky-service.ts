@@ -18,6 +18,7 @@ export const getStateVectors = async (mapGeoBounds: IMapGeoBounds)=>{
         const data = await response.json();
         const rawData : IStateVectorRawData = data;
         const getStateVectors = mapRawData(rawData);
+        console.log(getStateVectors?.states.length);
         if(!getStateVectors){
             throw new Error('Failed to fetch data');
         }
@@ -60,6 +61,7 @@ export const mapRawData = (rawData: IStateVectorRawData) =>{
             position_source: rawStateVector[16]
         };
         stateVectorData.states.push(stateVector);
-        return stateVectorData;
+       
     }
+    return stateVectorData;
 }

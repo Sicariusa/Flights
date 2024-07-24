@@ -9,6 +9,7 @@ export const svgToImage = (path: string, width: number, height: number) => {
         const img = new Image(width, height);
         img.src = path;
        img.addEventListener('load', () => resolve(img));
+       console.log('Image loaded');
     });
 }
 // Function to get geographic bounds from a Mapbox map and map it to our model (interface)
