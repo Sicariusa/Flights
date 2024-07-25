@@ -1,9 +1,9 @@
 import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
-import flightLand from './../resources/flight-land.svg'
-import flightIcon from './../resources/flight.svg'
-import flightTakeOff from './../resources/flight-takeoff.svg'
+import flightLand from './../resources/flight-land (2).svg'
+import flightIcon from './../resources/flight (2).svg'
+import flightTakeOff from './../resources/flight-takeoff (2).svg'
 import { createFeatures, getMapGeoBounds, svgToImage, getSymbolLayout, getSymbolPaint } from "../helper/helper";
 import { getStateVectors } from "../service/opensky-service";
 

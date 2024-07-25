@@ -167,8 +167,14 @@ export const getColor = (altitude: number)=>{
 }
 
 export const getIconName = (vertical_rate: number, altitude: number, trueTrack: number)=>{  
-    let iconName = 'flight-icon';
-    return iconName;
+    let iconName: string = 'flight-icon';
+    if(vertical_rate > 0 && altitude < 1000){
+        iconName = 'flight-takeoff';
+        //missing flipped icon
+    } else if(vertical_rate < 0 && altitude < 1000){
+        iconName = 'flight-land';
+    }//missing flipped icon
+    
 }
 export const getRotation = (vertical_rate: number, altitude: number, trueTrack: number)=>{
     let rotation: number = 0;
