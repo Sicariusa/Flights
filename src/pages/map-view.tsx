@@ -1,4 +1,4 @@
-import mapboxgl, { FullscreenControl, GeolocateControl, NavigationControl } from "mapbox-gl";
+import mapboxgl, { FullscreenControl, GeoJSONSource, GeolocateControl, NavigationControl } from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
 import './../map.css'
 import flightLand from './../resources/flight-land (2).svg'
@@ -91,9 +91,31 @@ export const MapView = (props: MView)=>{
             )
         });
          setMapInstance(map);
+    }
+    const updateData = setInterval(async () =>{
+        if(!mapInstance){ 
+            throw new Error('Mafee4 map f update data')
+        }
+        const bounds = getMapGeoBounds(mapInstance.getBounds() as mapboxgl.LngLatBounds);
+        const stateVectors = await getStateVectors(bounds);
+        if(!stateVectors){
+            throw new Error('Mafee4 stateVectors f update data')
+        }
+        const features = createFeatures(stateVectors);
+        if(!features){
+           throw new Error('Mafee4 features f update data')
+        }
+        const source: mapboxgl.GeoJSONSource = mapInstance.getSource('flight-source') as mapboxgl.GeoJSONSource
+        if(!source){
+            throw new Error('Problem with source 3nd updateData')
+        }
+        source.setData(features);
+    }, 1200); // 5aleha 5
+    return () => {
+        clearInterval(updateData)
+    }
 
-     }
-    }); // useEffect hook to run side effects in the component
+}, [mapInstance]); // useEffect hook to run side effects in the component
     
     return (
         <div className="root">

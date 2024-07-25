@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, GeoJsonProperties, Point, Position } from "geojson";
+import { Feature, FeatureCollection, GeoJsonProperties, Geometry, Point, Position } from "geojson";
 import { IMapGeoBounds, IStateVectorData } from "../model/opensky-model";
 import { Expression, StyleSpecification, SymbolLayout, SymbolPaint } from "mapbox-gl";
 import { get } from "http";
