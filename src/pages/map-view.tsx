@@ -94,7 +94,7 @@ export const MapView = (props: MView)=>{
     }
     const updateData = setInterval(async () =>{
         updateFlights()
-    }, 5000); // 12000 ms
+    }, 12000); // 12000 ms
     return () => {
         clearInterval(updateData)
     }
