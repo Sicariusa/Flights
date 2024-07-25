@@ -93,30 +93,39 @@ export const MapView = (props: MView)=>{
          setMapInstance(map);
     }
     const updateData = setInterval(async () =>{
-        if(!mapInstance){ 
-            throw new Error('Mafee4 map f update data')
-        }
-        const bounds = getMapGeoBounds(mapInstance.getBounds() as mapboxgl.LngLatBounds);
-        const stateVectors = await getStateVectors(bounds);
-        if(!stateVectors){
-            throw new Error('Mafee4 stateVectors f update data')
-        }
-        const features = createFeatures(stateVectors);
-        if(!features){
-           throw new Error('Mafee4 features f update data')
-        }
-        const source: mapboxgl.GeoJSONSource = mapInstance.getSource('flight-source') as mapboxgl.GeoJSONSource
-        if(!source){
-            throw new Error('Problem with source 3nd updateData')
-        }
-        source.setData(features);
-    }, 1200); // 5aleha 5
+        updateFlights()
+    }, 5000); // 12000 ms
     return () => {
         clearInterval(updateData)
     }
 
 }, [mapInstance]); // useEffect hook to run side effects in the component
-    
+    const updateFlights = async () =>{
+        if(!mapInstance){ 
+            throw new Error('Mafee4 map f update data')
+        }
+        try{
+        const bounds = getMapGeoBounds(mapInstance.getBounds() as mapboxgl.LngLatBounds);
+        const stateVectors = await getStateVectors(bounds);
+        if(!stateVectors){
+            console.error('Map instance is not available.');
+        return;
+        }
+        const features = createFeatures(stateVectors);
+        if(!features){
+            console.error('Features is not available.');
+            return;
+        }
+        const source: mapboxgl.GeoJSONSource = mapInstance.getSource('flight-source') as mapboxgl.GeoJSONSource
+        if(!source){
+            console.error('Source is not available.');
+        return;
+        }
+        source.setData(features);
+    } catch (error){
+        console.error("error updating data")
+    }
+    }
     return (
         <div className="root">
             <div className="map-root" ref={mapContainer}></div>
