@@ -55,21 +55,19 @@ export const MapView = (props: MView)=>{
            return;
         }
         const features = createFeatures(stateVectors);
-        map.addSource('flight-source', {
-            type: 'geojson',
-            data: features
-        });
-        
-       map.addLayer({
-        id:'flight-layer',
-        type:'symbol',
-        source:'flight-source',//taken from addSource method from features
-        layout: getSymbolLayout(map.getZoom()),
-        paint: getSymbolPaint()
-    })
-        
-
-            map.addControl(
+                map.addSource('flight-source', {
+                    type: 'geojson',
+                    data: features
+                });
+                
+            map.addLayer({
+                id:'flight-layer',
+                type:'symbol',
+                source:'flight-source',//taken from addSource method from features
+                layout: getSymbolLayout(map.getZoom()),
+                paint: getSymbolPaint()
+            })
+             map.addControl(
                 new NavigationControl({
                     showCompass: true,
                     showZoom: true
@@ -101,30 +99,40 @@ export const MapView = (props: MView)=>{
 
 }, [mapInstance]); // useEffect hook to run side effects in the component
     const updateFlights = async () =>{
-        if(!mapInstance){ 
-            throw new Error('Mafee4 map f update data')
-        }
-        try{
-        const bounds = getMapGeoBounds(mapInstance.getBounds() as mapboxgl.LngLatBounds);
-        const stateVectors = await getStateVectors(bounds);
-        if(!stateVectors){
-            console.error('Map instance is not available.');
-        return;
-        }
-        const features = createFeatures(stateVectors);
-        if(!features){
-            console.error('Features is not available.');
-            return;
-        }
-        const source: mapboxgl.GeoJSONSource = mapInstance.getSource('flight-source') as mapboxgl.GeoJSONSource
-        if(!source){
-            console.error('Source is not available.');
-        return;
-        }
-        source.setData(features);
-    } catch (error){
-        console.error("error updating data")
-    }
+                if(!mapInstance){ 
+                    throw new Error('Mafee4 map f update data')
+                }
+                try{
+                const bounds = getMapGeoBounds(mapInstance.getBounds() as mapboxgl.LngLatBounds);
+                const stateVectors = await getStateVectors(bounds);
+                if(!stateVectors){
+                    console.error('Map instance is not available.');
+                return;
+                }
+                const features = createFeatures(stateVectors);
+                if(!features){
+                    console.error('Features is not available.');
+                    return;
+                }
+                const source: mapboxgl.GeoJSONSource = mapInstance.getSource('flight-source') as mapboxgl.GeoJSONSource
+                if(!source){
+                    console.error('Source is not available.');
+                return;
+                }
+                source.setData(features);
+                if(mapInstance.getLayer('flight-layer')){
+                    mapInstance.removeLayer('flight-layer')
+                    mapInstance.addLayer({
+                        id:'flight-layer',
+                        type:'symbol',
+                        source:'flight-source',//taken from addSource method from features
+                        layout: getSymbolLayout(mapInstance.getZoom()),
+                        paint: getSymbolPaint()
+                    })
+                }
+            } catch (error){
+                console.error("error updating data")
+            }
     }
     return (
         <div className="root">
