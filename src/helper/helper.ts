@@ -76,9 +76,9 @@ export const createFeatures = (stateVectors: IStateVectorData | undefined)=>{
         'color':color, // the color we declared in line 68
         'icao24': stateVector.icao24,
         'callsign': callsign,
-        'originCountry': originCountry,
-        'altitude': altitude + 'm',
-        'velocity': velocity + 'km/h',
+        'origin': originCountry,
+        'altitude': altitude + ' m',
+        'velocity': velocity.toFixed(2) + ' km/h', 
 
     }
     let position: Position = [stateVector.longitude, stateVector.latitude];

@@ -88,8 +88,71 @@ export const MapView = (props: MView)=>{
             'bottom-right'
             )
         });
+        map.on('mouseenter', 'flight-layer', (e) =>{
+            map.getCanvas().style.cursor = 'pointer';
+
+        });
+        map.on('mouseleave', 'flight-layer', (e) =>{
+            map.getCanvas().style.cursor = '';
+
+        });
+        
+        map.on('click', 'flight-layer', (e) => {
+            e.preventDefault();
+            const icao24 = e.features![0].properties?.icao24;
+            const fromOrigin = e.features![0].properties?.origin;
+            
+            const popupContent = `
+                <div style="
+                    background: linear-gradient(135deg, #4a90e2, #9013fe);
+                    color: #ffffff;
+                    padding: 0;
+                    border-radius: 12px;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+                    max-width: 280px;
+                    text-align: center;
+                    width: 100%;
+                ">
+                    <div style="
+                        margin-bottom: 10px;
+                        padding: 15px;
+                        font-size: 22px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                        background-color: rgba(0, 0, 0, 0.2);
+                        border-top-left-radius: 12px;
+                        border-top-right-radius: 12px;
+                    ">
+                        Flight Info
+                    </div>
+                    <div style="padding: 15px;">
+                        <p style="margin: 10px 0; font-size: 16px;">
+                            <i class="fas fa-plane" style="color: #ffcc00; margin-right: 8px;"></i>
+                            <strong>ICAO24:</strong> ${icao24}
+                        </p>
+                        <p style="margin: 10px 0; font-size: 16px;">
+                            <i class="fas fa-globe" style="color: #ffcc00; margin-right: 8px;"></i>
+                            <strong>Origin:</strong> ${fromOrigin}
+                        </p>
+                    </div>
+                </div>
+            `;
+        
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(popupContent)
+                .addTo(map);
+        });
+        
+        
+        
          setMapInstance(map);
     }
+
+
     const updateData = setInterval(async () =>{
         updateFlights()
     }, 10000); // 12000 ms
@@ -97,7 +160,8 @@ export const MapView = (props: MView)=>{
         clearInterval(updateData)
     }
 
-}, [mapInstance]); // useEffect hook to run side effects in the component
+}, [mapInstance]);
+
     const updateFlights = async () =>{
                 if(!mapInstance){ 
                     throw new Error('Mafee4 map f update data')
