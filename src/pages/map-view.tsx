@@ -96,7 +96,41 @@ export const MapView = (props: MView)=>{
             map.getCanvas().style.cursor = '';
 
         });
+        map.on('click', 'flight-layer', (e)=>{
+            e.preventDefault();
+            const icao24 = e.features![0].properties?.icao24;
+            const fromOrigin = e.features![0].properties?.origin;
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML('<div><strong>' + icao24 + '</strong><br/>' + fromOrigin + '</div>')
+                .addTo(map)
+        })
+        // map.on('click', 'flight-layer', (e) => {
+        //     e.preventDefault();
+        //     const icao24 = e.features![0].properties?.icao24;
+        //     const fromOrigin = e.features![0].properties?.origin;
+            
+        //     const popupContent = `
+        //         <div style="
+        //             background-color: #2d3748;
+        //             color: #f7fafc;
+        //             padding: 10px;
+        //             border-radius: 8px;
+        //             font-family: Arial, sans-serif;
+        //             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        //             max-width: 250px;
+        //         ">
+        //             <h3 style="margin: 0 0 10px; font-size: 18px; color: #63b3ed;">Flight Info</h3>
+        //             <p style="margin: 0; font-size: 14px;"><strong>ICAO24:</strong> ${icao24}</p>
+        //             <p style="margin: 0; font-size: 14px;"><strong>Origin:</strong> ${fromOrigin}</p>
+        //         </div>
+        //     `;
         
+        //     new mapboxgl.Popup()
+        //         .setLngLat(e.lngLat)
+        //         .setHTML(popupContent)
+        //         .addTo(map);
+        // });
         map.on('click', 'flight-layer', (e) => {
             e.preventDefault();
             const icao24 = e.features![0].properties?.icao24;
@@ -146,7 +180,7 @@ export const MapView = (props: MView)=>{
                 .setHTML(popupContent)
                 .addTo(map);
         });
-        
+    
         
         
          setMapInstance(map);
