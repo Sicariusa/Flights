@@ -1,9 +1,5 @@
 
 
-Here’s an updated and exciting GitHub repository description that includes the mentioned features and the images you uploaded:
-
----
-
 ## ✈️ SkyTracker: The Ultimate Real-Time Flight Explorer 🌍
 
 Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and you become the master of the airspace! This project isn’t just a flight tracker—it’s your gateway to the high-flying world of real-time aviation, bringing you closer to the action than ever before.
@@ -17,7 +13,9 @@ Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and 
 ### 🚀 Here’s What It Looks Like:
 
 <img width="1280" alt="Screenshot 2024-07-24 224131" src="https://github.com/user-attachments/assets/86c0ad69-3fb7-457b-8533-034112e870b6">
-<img width="492" alt="Screenshot 2024-08-09 210607" src="https://github.com/user-attachments/assets/65ffbf41-73bc-438c-b26d-ef431abe4523">
+<img width="1280" alt="Screenshot 2024-08-29 195358" src="https://github.com/user-attachments/assets/2f380059-7da1-4fc8-ac7c-fce5bddef7e8">
+
+
 ### 💥 Behind the Magic:
 - **Backend**: Node.js powers the engine, ensuring smooth and responsive real-time data handling.
 - **Frontend**: React brings the user interface to life, creating a seamless experience from ground level to cruising altitude.
