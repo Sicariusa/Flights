@@ -16,10 +16,8 @@ Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and 
 
 ### 🚀 Here’s What It Looks Like:
 
-![Flight Altitude and Speed]<img width="1280" alt="Screenshot 2024-07-24 224131" src="https://github.com/user-attachments/assets/86c0ad69-3fb7-457b-8533-034112e870b6">
-
-
-![Global Flight Overview]<img width="492" alt="Screenshot 2024-08-09 210607" src="https://github.com/user-attachments/assets/65ffbf41-73bc-438c-b26d-ef431abe4523">
+<img width="1280" alt="Screenshot 2024-07-24 224131" src="https://github.com/user-attachments/assets/86c0ad69-3fb7-457b-8533-034112e870b6">
+<img width="492" alt="Screenshot 2024-08-09 210607" src="https://github.com/user-attachments/assets/65ffbf41-73bc-438c-b26d-ef431abe4523">
 ### 💥 Behind the Magic:
 - **Backend**: Node.js powers the engine, ensuring smooth and responsive real-time data handling.
 - **Frontend**: React brings the user interface to life, creating a seamless experience from ground level to cruising altitude.
