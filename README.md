@@ -1,5 +1,9 @@
 
 
+Here’s an updated and exciting GitHub repository description that includes the mentioned features and the images you uploaded:
+
+---
+
 ## ✈️ SkyTracker: The Ultimate Real-Time Flight Explorer 🌍
 
 Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and you become the master of the airspace! This project isn’t just a flight tracker—it’s your gateway to the high-flying world of real-time aviation, bringing you closer to the action than ever before.
@@ -7,9 +11,15 @@ Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and 
 ### 🌟 What Awaits You:
 - **Live Flight Radar**: Get a front-row seat to the world's air traffic with [OpenSky Network](https://opensky-network.org/). Watch in real time as thousands of aircraft crisscross the skies, and feel the thrill of following their journeys from takeoff to touchdown.
 - **Immersive 3D Map**: Thanks to [Mapbox](https://www.mapbox.com/), you’re not just looking at flights—you’re experiencing them. Our interactive map pulls you into the scene, letting you zoom in on planes, follow their paths, and explore their routes as if you were right there in the cockpit.
-- **Futuristic Popups**: When you click on a flight, prepare to be wowed by ultra-modern, sleek popups that serve up all the vital stats with style. It’s like having the control tower in your pocket—only way cooler.
-- **Custom Flight Filters**: Whether you’re tracking supersonic speeds or flights cruising at 35,000 feet, our powerful filters let you zero in on exactly what you’re interested in. Tailor your skywatching experience to your every whim!
+  - **Zoom In for Details**: As you zoom in on the map, the altitude and speed of each flight are displayed right on the screen, giving you precise control over what you see.
+  - **Interactive Popups**: Click on any plane to reveal a sleek, futuristic popup that provides detailed information like the plane's ICAO24 code and origin—it's like having the control tower at your fingertips.
 
+### 🚀 Here’s What It Looks Like:
+
+![Flight Altitude and Speed]<img width="1280" alt="Screenshot 2024-07-24 224131" src="https://github.com/user-attachments/assets/86c0ad69-3fb7-457b-8533-034112e870b6">
+
+
+![Global Flight Overview]<img width="492" alt="Screenshot 2024-08-09 210607" src="https://github.com/user-attachments/assets/65ffbf41-73bc-438c-b26d-ef431abe4523">
 ### 💥 Behind the Magic:
 - **Backend**: Node.js powers the engine, ensuring smooth and responsive real-time data handling.
 - **Frontend**: React brings the user interface to life, creating a seamless experience from ground level to cruising altitude.
@@ -22,5 +32,4 @@ Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and 
 3. Hit the launch button and take to the skies—your real-time flight adventure begins now!
 
 
-<img width="1280" alt="Screenshot 2024-07-24 224131" src="https://github.com/user-attachments/assets/2687b9e9-c9dd-4658-860f-39affb1f7d3d">
-<img width="492" alt="Screenshot 2024-08-09 210607" src="https://github.com/user-attachments/assets/65ffbf41-73bc-438c-b26d-ef431abe4523">
+
