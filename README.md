@@ -24,7 +24,7 @@ Welcome to **SkyTracker**, where the boundaries between earth and sky blur, and 
 
 ### 🚀 How to Launch Your SkyTracker Adventure:
 1. Clone this repo and buckle up.
-2. Set up your environment with username , password and API keys from OpenSky Network and Mapbox.
+2. Set up your environment with username , password and API keys from OpenSky Network and Mapbox API key only.
 3. Hit the launch button and take to the skies—your real-time flight adventure begins now!
 
 
