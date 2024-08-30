@@ -2,8 +2,8 @@
 import {IMapGeoBounds, IStateVectorRawData, IStateVector, IStateVectorData} from './../model/opensky-model';
 //https://www.flightaware.com/commercial/aeroapi/
 const baseUrl = 'https://opensky-network.org/api';
-const username = 'abdo2024';
-const password = '12312300';
+const username = '';
+const password = '';
 
 export const getStateVectors = async (mapGeoBounds: IMapGeoBounds) => {
     const stateBounds = `?lamin=${mapGeoBounds.southernLatitude}&lomin=${mapGeoBounds.westernLongitude}&lamax=${mapGeoBounds.northernLatitude}&lomax=${mapGeoBounds.easternLongitude}`;
